@@ -1,6 +1,6 @@
 .. _parser:
 
-Guide of CPython's Parser
+Guide to CPython's Parser
 =========================
 
 :Author: Pablo Galindo Salgado
@@ -110,7 +110,7 @@ the following two rules (in these examples, a token is an individual character):
 
 In a regular EBNF grammar, both rules specify the language ``{aa, aaa}`` but
 in PEG, one of these two rules accepts the string ``aaa`` but not the string
-``aa``. The other does the opposite -- it accepts the string the string ``aa``
+``aa``. The other does the opposite -- it accepts the string ``aa``
 but not the string ``aaa``. The rule ``('a'|'aa')'a'`` does
 not accept ``aaa`` because ``'a'|'aa'`` consumes the first ``a``, letting the
 final ``a`` in the rule consume the second, and leaving out the third ``a``.
@@ -169,7 +169,7 @@ Python-style comments.
 ``e1 e2``
 '''''''''
 
-Match e1, then match e2.
+Match ``e1``, then match ``e2``.
 
 ::
 
@@ -178,7 +178,7 @@ Match e1, then match e2.
 ``e1 | e2``
 '''''''''''
 
-Match e1 or e2.
+Match ``e1`` or ``e2``.
 
 The first alternative can also appear on the line after the rule name
 for formatting purposes. In that case, a \| must be used before the
@@ -193,7 +193,7 @@ first alternative, like so:
 ``( e )``
 '''''''''
 
-Match e.
+Match ``e``.
 
 ::
 
@@ -209,7 +209,7 @@ operator together with the repeat operators:
 ``[ e ] or e?``
 '''''''''''''''
 
-Optionally match e.
+Optionally match ``e``.
 
 ::
 
@@ -225,7 +225,7 @@ optional:
 ``e*``
 ''''''
 
-Match zero or more occurrences of e.
+Match zero or more occurrences of ``e``.
 
 ::
 
@@ -234,7 +234,7 @@ Match zero or more occurrences of e.
 ``e+``
 ''''''
 
-Match one or more occurrences of e.
+Match one or more occurrences of ``e``.
 
 ::
 
@@ -243,7 +243,7 @@ Match one or more occurrences of e.
 ``s.e+``
 ''''''''
 
-Match one or more occurrences of e, separated by s. The generated parse
+Match one or more occurrences of ``e``, separated by ``s``. The generated parse
 tree does not include the separator. This is otherwise identical to
 ``(e (s e)*)``.
 
@@ -256,14 +256,14 @@ tree does not include the separator. This is otherwise identical to
 
 .. _peg-positive-lookahead:
 
-Succeed if e can be parsed, without consuming any input.
+Succeed if ``e`` can be parsed, without consuming any input.
 
 ``!e``
 ''''''
 
 .. _peg-negative-lookahead:
 
-Fail if e can be parsed, without consuming any input.
+Fail if ``e`` can be parsed, without consuming any input.
 
 An example taken from the Python grammar specifies that a primary
 consists of an atom, which is not followed by a ``.`` or a ``(`` or a
@@ -276,14 +276,15 @@ consists of an atom, which is not followed by a ``.`` or a ``(`` or a
 ``~``
 ''''''
 
-Commit to the current alternative, even if it fails to parse.
+Commit to the current alternative, even if it fails to parse (this is called
+the "cut").
 
 ::
 
     rule_name: '(' ~ some_rule ')' | some_alt
 
 In this example, if a left parenthesis is parsed, then the other
-alternative won’t be considered, even if some_rule or ‘)’ fail to be
+alternative won’t be considered, even if some_rule or ``)`` fail to be
 parsed.
 
 Left recursion
@@ -343,16 +344,25 @@ inside curly-braces, which specifies the return value of the alternative::
         | first_alt1 first_alt2 { first_alt1 }
         | second_alt1 second_alt2 { second_alt1 }
 
-If the action is ommited, a default action is generated: 
+If the action is omitted, a default action is generated:
 
-* If there's a single name in the rule in the rule, it gets returned.
+* If there's a single name in the rule, it gets returned.
 
 * If there is more than one name in the rule, a collection with all parsed
   expressions gets returned (the type of the collection will be different
   in C and Python).
 
 This default behaviour is primarily made for very simple situations and for
-debugging pourposes.
+debugging purposes.
+
+.. warning::
+
+    It's important that the actions don't mutate any AST nodes that are passed
+    into them via variables referring to other rules. The reason for mutation
+    being not allowed is that the AST nodes are cached by memoization and could
+    potentially be reused in a different context, where the mutation would be
+    invalid. If an action needs to change an AST node, it should instead make a
+    new copy of the node and change that.
 
 The full meta-grammar for the grammars supported by the PEG generator is:
 
@@ -798,7 +808,7 @@ when they succeed. Constructing these objects can be quite cumbersome (see
 the :ref:`AST compiler section <compiler-ast-trees>` for more information
 on how these objects are constructed and how they are used by the compiler) so
 special helper functions are used. These functions are declared in the
-:file:`Parser/pegen.h` header file and defined in the :file:`Parser/pegen.c`
+:file:`Parser/pegen.h` header file and defined in the :file:`Parser/action_helpers.c`
 file. These functions allow you to join AST sequences, get specific elements
 from them or to do extra processing on the generated tree.
 
@@ -812,7 +822,7 @@ from them or to do extra processing on the generated tree.
 
 As a general rule, if an action spawns multiple lines or requires something more
 complicated than a single expression of C code, is normally better to create a
-custom helper in :file:`Parser/pegen.c` and expose it in the
+custom helper in :file:`Parser/action_helpers.c` and expose it in the
 :file:`Parser/pegen.h` header file so it can be used from the grammar.
 
 If the parsing succeeds, the parser **must** return a **valid** AST object.
@@ -863,7 +873,7 @@ Verbose mode
 ~~~~~~~~~~~~
 
 When Python is compiled in debug mode (by adding ``--with-pydebug`` when running the configure step in Linux or by
-adding ``-d`` when calling the :file:`PCbuild/python.bat` script in Windows), is possible to activate a **very** verbose
+adding ``-d`` when calling the :file:`PCbuild/python.bat` script in Windows), it is possible to activate a **very** verbose
 mode in the generated parser. This is very useful to debug the generated parser and to understand how it works, but it
 can be a bit hard to understand at first. 
 

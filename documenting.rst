@@ -1595,7 +1595,8 @@ in production, other are work in progress:
 +-----------------+-------------------------------+----------------------------+
 | Language        | Contact                       | Links                      |
 +=================+===============================+============================+
-| Arabic (ar)     | Ibrahim Elbouhissi            | `GitHub <github_ar_>`_     |
+| Arabic (ar)     | `Abdur-Rahmaan Janhangeer     | `GitHub <github_ar_>`_     |
+|                 | <bpo_osdotsystem_>`_          |                            |
 +-----------------+-------------------------------+----------------------------+
 | Bengali as      | `Kushal Das <bpo_kushal_>`_   | `GitHub <github_bn_in_>`_  |
 | spoken in       |                               |                            |
@@ -1641,9 +1642,9 @@ in production, other are work in progress:
 +-----------------+-------------------------------+----------------------------+
 | Spanish (es)    | Raúl Cumplido                 | `GitHub <github_es_>`_     |
 +-----------------+-------------------------------+----------------------------+
-| Traditional     | 廖偉涵 Adrian Liaw            | `GitHub <github_zh_tw_>`_  |
-| Chinese         |                               | `Transifex <tx_zh_tw_>`_   |
-| (zh-tw)         |                               | `Doc <doc_zh_tw_>`_        |
+| Traditional     | `王威翔 Matt Wang             | `GitHub <github_zh_tw_>`_  |
+| Chinese         | <bpo_mattwang44_>`_,          | `Transifex <tx_zh_tw_>`_   |
+| (zh-tw)         | Josix Wang                    | `Doc <doc_zh_tw_>`_        |
 +-----------------+-------------------------------+----------------------------+
 | Turkish (tr)    |                               | `GitHub <github_tr_>`_     |
 +-----------------+-------------------------------+----------------------------+
@@ -1654,7 +1655,9 @@ in production, other are work in progress:
 .. _bpo_kushal: https://bugs.python.org/user16382
 .. _bpo_mdk: https://bugs.python.org/user23063
 .. _bpo_oonid: https://bugs.python.org/user32660
+.. _bpo_osdotsystem: https://bugs.python.org/user28057
 .. _bpo_zhsj: https://bugs.python.org/user24811
+.. _bpo_mattwang44: https://bugs.python.org/user39654
 .. _chat_pt_br: https://t.me/pybr_i18n
 .. _doc_ja: https://docs.python.org/ja/
 .. _doc_ko: https://docs.python.org/ko/
@@ -1768,7 +1771,7 @@ Here's what's we're using:
 How a coordinator is elected?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-There is no election, each country have to sort this out.  Here are some suggestions.
+There is no election, each translation have to sort this out.  Here are some suggestions.
 
 -  Coordinator requests are to be public on doc-sig mailing list.
 -  If the given language have a native core dev, the core dev have its
